@@ -12,11 +12,11 @@
         <form method="get" action="leer_numeros.php">
             <div>
                 <label for="num1">Introduce el primer número</label>
-                <input type="text" name="num1" id="num1">
+                <input type="number" step="any" name="num1" id="num1">
             </div>
             <div>
                 <label for="num2">Introduce el segundo número</label>
-                <input type="text" name="num2" id="num2">
+                <input type="number" step="any" name="num2" id="num2">
             </div>
             <button type="submit">Submit</button>
         </form>
