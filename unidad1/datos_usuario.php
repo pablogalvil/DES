@@ -50,13 +50,16 @@
         </form>
     </div>
     <?php 
+    //Compruebo que estan todos los valores antes de mostrar nada
     if (isset($_GET["dni"]) && isset($_GET["telefono"]) && isset($_GET["estado_social"]) && isset($_GET["vehiculo"])){
         
+        //Guardo los valores
         $dni = $_GET["dni"];
         $telefono = $_GET["telefono"];
         $estado_social = $_GET["estado_social"];
         $vehiculo = $_GET["vehiculo"];
         
+        //Muestro la frase
         echo "<br>_El usuario con $dni responde al $telefono es $estado_social y viaja en $vehiculo";
     }
     ?>

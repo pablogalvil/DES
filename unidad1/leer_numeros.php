@@ -21,10 +21,13 @@
             <button type="submit">Submit</button>
         </form>
         <?php
+        //Compruebo que estan todos los valores antes de mostrar nada
         if (isset($_GET["num1"]) && isset($_GET["num2"])) {
+            //Guardamos los valores
             $num1 = $_GET["num1"];
             $num2 = $_GET["num2"];
 
+            //Uno lo truncamos y otro lo redondeamos
             echo "<br>Tus números son " . (int)$num1 . " y " . round($num2, 0);
         }
         ?>
