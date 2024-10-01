@@ -25,7 +25,7 @@
             $num1 = $_GET["num1"];
             $num2 = $_GET["num2"];
 
-            echo "<br>Tus números son " . round($num1, 0) . " y " . round($num2, 1);
+            echo "<br>Tus números son " . (int)$num1 . " y " . round($num2, 0);
         }
         ?>
     </div>
