@@ -10,7 +10,7 @@
 <body>
     <?php
 
-    //Creamos la funcion para saber si es palindromo
+    //Creamos la funcion para saber si es palindromo (No quiere que usemos esta)
     function es_palindromo($palabra)
     {
         if ($palabra == strrev($palabra)) {
@@ -31,6 +31,21 @@
     //    return $cad_inversa;
     //}
 
+    //Ctrl + ç para comentar todo
+    // function es_palindromo_pablo($palabra)
+    // {
+    //     $mitad = (int) (strlen($palabra) / 2);
+    //     for ($i = 0; $i < $mitad; $i++) {
+    //         //Comparamos letra a letra la posicion actual del indice i con
+    //         //su inversa, que será la última posicion de la cadena (strlen -1) menos la i
+    //         if ($palabra[$i] != $palabra[strlen($palabra) - $i - 1]) {
+    //             return false;
+    //         }
+    //     }
+    //     //Si llega al final implica que todas las letras son iguales.
+    //     return true;
+    // }
+
     #Este fichero recibe de un formulario html dos datos, una palabra con un type text
     #y un texto de varias líneas con un textarea y un checkbox que diga si ignora o no mayúsculas
     #El programa contará la cantidad de palabras totales, la cantidad de palabras que sean palíndromos
@@ -39,6 +54,7 @@
     #Se devolverá en un array asociativo con todos los valores resultados
     if (isset($_POST["palabra"])) $palabra_buscar = $_POST["palabra"];
     if (isset($_POST["texto"])) $texto = $_POST["texto"];
+    //Al ser un checkbox, si no está seleccionado dará null, por lo que hay que inicializarlo a false
     $ignorar_mayusculas = false;
     if (isset($_POST["ignorarMayusculas"])) {
         $ignorar_mayusculas = true;
@@ -72,12 +88,22 @@
         $num_frases = $num_frases + count(explode(".", $linea)) - 1;
 
         foreach ($palabras as $palabra) {
+            $palabra = trim($palabra);
+            
+            //Si el checkbox está marcado pasamos las palabras a minúsculas
+            if ($ignorar_mayusculas) {
+                $palabra = strtolower($palabra);
+                $palabra_buscar = strtolower($palabra_buscar);
+            }
+
             if ($palabra == $palabra_buscar) {
                 $num_palabra_buscar++;
             }
+
             if (es_palindromo($palabra)) {
                 $num_palindromos++;
             }
+
             //Es un palindromo si la palabra es iguual a su inversa
             //if (es_palindromo_pablo($palabra) == $palabra) {
             //    $num_palindromos++;
