@@ -1,3 +1,10 @@
+<?php
+//    declare(strict_types = 1);
+//incluimos la libreria
+//Include ignora el comando si no encuentra el archivo, mientras que
+//require lanza un error.
+include "./lib/funciones.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,15 +14,14 @@
 </head>
 <body>
     <?php
-    /**
-     * La función recibe un numero y una potencia y devuelve el numero elevado a esa potencia
-     * @param int $numero
-     * @param int $potencia
-     * @return 
-     */ 
-    function powertotalis($numero, $potencia){
-        $numero = $numero ** $potencia;
-        echo $numero."<br>";
+
+    $nombre_funcion = "maximo";
+
+    function maximo(){
+        //Con get args podemos recuperar todos los argunmentos con los
+        //que he llamado a la función, los devuelve como un array.
+        $parametros = func_get_args();
+        return max($parametros);
     }
 
     //Para parsar el valor  de una variable a una función hay que poner el &
@@ -32,11 +38,11 @@
 
     echo $valor."<br>";
 
-    $valor = 3;
-    $potencia = 2;
     powertotalis_ref($valor, $potencia);
 
     echo $valor."<br>";
+
+    echo $nombre_funcion(23, 24, 1, -2);
 
     /**
      * Ejercicio 4 realizar un programa en php que lea los siguientes datos de un formulario
