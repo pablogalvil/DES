@@ -13,10 +13,10 @@
     </style>
     <?php 
         //Genera la carta
-        $num_aleatorio = (int) rand(1, 13);
-        $tipo_aleatorio = (int) rand(0, 3);
-        $num_aleatorio2 = (int) rand(1, 13);
-        $tipo_aleatorio2 = (int) rand(0, 3);
+        $num_aleatorio = rand(1, 13);
+        $tipo_aleatorio = rand(0, 3);
+        $num_aleatorio2 = rand(1, 13);
+        $tipo_aleatorio2 = rand(0, 3);
 
         //Array que guarda los tipos de las cartas.
         $tipos = ["clubs", "diamonds", "hearts", "spades"];
