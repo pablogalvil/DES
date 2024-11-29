@@ -113,5 +113,26 @@ class Entrenador
             return false;
         }
     }
+
+    function cargarTodoPaginado($num_pag, $elem_pag)
+    {
+        try {
+            $sql = "SELECT FROM ENTRENADOR OFFSET :offset LIMIT :elem_pag";
+            $stmt = $this->con->prepare($sql);
+
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+            $resultado = $stmt->execute([
+                ':elem_pag' => $elem_pag,
+                ':num_pag' => ((($num_pag - 1)*$elem_pag)+1)
+            ]);
+
+            if ($resultado){
+                return $stmt->fetchAll();
+            }
+        } catch (PDOException $e) {
+            echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
+        }
+    }
 }
 ?>
