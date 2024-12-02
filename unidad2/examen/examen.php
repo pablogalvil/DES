@@ -14,6 +14,7 @@
     $tiendas = explode("\n", $_POST["tiendas"]);
     $plantas = explode("\n", $_POST["plantas"]);
 
+    //Inicializamos el array asociativo.
     $comprobaciones = array("plantas" => false, "plantas sevilla" => false, "al menos una planta" => false, "listado recaudaciones" => "");
     $comprobacion_plantas = true;
     $comprobacion_sevilla = true;
@@ -21,6 +22,7 @@
     $listado = array();
     $recaudado = "";
 
+    //Bucle para pasar por las tiendas, empiezo a llamar a todas las funcion.
     for ($i = 0; $i < count($tiendas); $i++) {
         $datos_tienda = explode("-", $tiendas[$i]);
 
