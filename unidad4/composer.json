@@ -1,0 +1,11 @@
+{
+    "name": "daw/unidad4",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Daw\\Unidad4\\": "src/"
+        }
+    }
+}
