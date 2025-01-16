@@ -5,13 +5,15 @@ class Organizacion {
     public $num_unidades;
     public $localizacion;
     public $num_rivales;
+    public $id_jefe;
     
-    function __construct($id_organizacion, $nombre, $num_unidades, $localizacion, $num_rivales) {
+    function __construct($id_organizacion, $nombre, $num_unidades, $localizacion, $num_rivales, $id_jefe) {
         $this->id_organizacion = $id_organizacion;
         $this->nombre = $nombre;
         $this->num_unidades = $num_unidades;
         $this->localizacion = $localizacion;
         $this->num_rivales = $num_rivales;
+        $this->id_jefe = $id_jefe;
     }
     
     public function getId_organizacion() {
@@ -34,6 +36,10 @@ class Organizacion {
         return $this->num_rivales;
     }
 
+    public function getId_jefe() {
+        return $this->id_jefe;
+    }
+
     public function setId_organizacion($id_organizacion) {
         $this->id_organizacion = $id_organizacion;
     }
@@ -52,6 +58,10 @@ class Organizacion {
 
     public function setNum_rivales($num_rivales) {
         $this->num_rivales = $num_rivales;
+    }
+
+    public function setId_jefe($id_jefe) {
+        $this->id_jefe = $id_jefe;
     }
 }
 

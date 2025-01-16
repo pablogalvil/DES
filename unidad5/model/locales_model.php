@@ -4,15 +4,15 @@ class Local{
     public $tipo;
     public $nombre;
     public $antiguedad;
-    public $localizacion;
+    public $ubicacion;
     public $id_organizacion;
 
-    function __construct($id_locales, $tipo, $nombre, $antiguedad, $localizacion, $id_organizacion){
+    function __construct($id_locales, $tipo, $nombre, $antiguedad, $ubicacion, $id_organizacion){
         $this->id_locales = $id_locales;
         $this->tipo = $tipo;
         $this->nombre = $nombre;
         $this->antiguedad = $antiguedad;
-        $this->localizacion = $localizacion;
+        $this->ubicacion = $ubicacion;
         $this->id_organizacion = $id_organizacion;
     }
 
@@ -32,8 +32,8 @@ class Local{
         return $this->antiguedad;
     }
 
-    function getLocalizacion(){
-        return $this->localizacion;
+    function getUbicacion(){
+        return $this->ubicacion;
     }
 
     function getId_organizacion(){
@@ -56,8 +56,8 @@ class Local{
         $this->antiguedad = $antiguedad;
     }
 
-    function setLocalizacion($localizacion){
-        $this->localizacion = $localizacion;
+    function setUbicacion($ubicacion){
+        $this->ubicacion = $ubicacion;
     }
 
     function setId_organizacion($id_organizacion){

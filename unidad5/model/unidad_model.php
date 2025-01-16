@@ -6,16 +6,16 @@ class Unidad {
     public $armas;
     public $dinero;
     public $id_organizacion;
-    public $id_jefe;
+    public $id_jefe_unidad;
     
-    public function __construct($id_unidad, $num_subordinados, $vehiculos, $armas, $dinero, $id_organizacion, $id_jefe) {
+    public function __construct($id_unidad, $num_subordinados, $vehiculos, $armas, $dinero, $id_organizacion, $id_jefe_unidad) {
         $this->id_unidad = $id_unidad;
         $this->num_subordinados = $num_subordinados;
         $this->vehiculos = $vehiculos;
         $this->armas = $armas;
         $this->dinero = $dinero;
         $this->id_organizacion = $id_organizacion;
-        $this->id_jefe = $id_jefe;
+        $this->id_jefe_unidad = $id_jefe_unidad;
     }
 
     public function getId_unidad() {
@@ -66,12 +66,12 @@ class Unidad {
         $this->id_organizacion = $id_organizacion;
     }
 
-    public function getId_jefe() {
-        return $this->id_jefe;
+    public function getId_jefe_unidad() {
+        return $this->id_jefe_unidad;
     }
 
-    public function setId_jefe($id_jefe) {
-        $this->id_jefe = $id_jefe;
+    public function setId_jefe_unidad($id_jefe_unidad) {
+        $this->id_jefe_unidad = $id_jefe_unidad;
     }
 
 }
