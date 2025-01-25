@@ -176,26 +176,26 @@ class Model
         try {
 
             //Vamos a hacer un ejemplo en el cual borramos el entrenador numero 4
-            $sql = "UPDATE SET $this->table ";
+            $sql = "UPDATE $this->table SET ";
 
             //Sacamos las claves que corresponden con los nombres de los campos
             $campos = array_keys($datos);
 
             //Primero añadimos los nombres de los campos que vienen como claves en el array asociativo
-            for ($i = 0; $i < count($campos); $i++) {
-                if ($i < count($campos) - 1)
-                    $sql .= "$campos[$i]=:$campos[$i]";
+            for ($i = 0; $i < count($campos) - 1; $i++) {
+                if ($i < count($campos) - 2)
+                    $sql .= "$campos[$i]=:$campos[$i],";
                 else
                     $sql .= "$campos[$i]=:$campos[$i]";
             }
+
+            $sql .= " WHERE id" . $this->table . " =:id";
 
             //Utilizamos la conexion activa de nuestro objeto
             //Para crear la sentencia sql
             $stmt = $this->con->prepare($sql);
 
             echo $stmt->queryString;
-
-            
 
             //Ejecutamos la sentencia substituyendo las interrogacions por los valores
             //Que metemos dentro del array que le pasamos a execute

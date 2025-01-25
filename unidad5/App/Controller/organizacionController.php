@@ -14,9 +14,9 @@ class OrganizacionController
         //Creamos el modelo
         $organizacionM = new Organizacion($con);
         //Cargamos los entrenadores
-        $entrenadores = $organizacionM->cargarTodoPaginado(1,200);
+        $organizaciones = $organizacionM->cargarTodoPaginado(1,200);
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("organizacion");
+        $datos = compact("organizaciones");
 
         
         //Cargamos la vista
@@ -35,12 +35,12 @@ class OrganizacionController
         //Compactamos los datos que necesita la vista para luego pasarselos
         $datos = compact("organizacion");
          //Cargamos la vista
-        Utils::render('ver',$datos);
+        Utils::render('verOrganizacion',$datos);
     }
 
     public function crearOrganizacion()
     {
-        Utils::render('crear');
+        Utils::render('crearOrganizacion', []);
     }
 
     public function insertarOrganizacion()
@@ -55,9 +55,14 @@ class OrganizacionController
         $organizacionM = new Organizacion($con);
         //Cargamos los entrenadores
         $organizacion = $organizacionM->insertar($organizacion);
-         //Cargamos la vista
+        //Cargamos la vista
         Utils::redirect('/');
 
+    }
+
+    public function editarOrganizacion($id)
+    {
+        Utils::render('editarOrganizacion', $id);
     }
 
     public function modificarOrganizacion()
@@ -65,16 +70,14 @@ class OrganizacionController
        //Guardo los datos del formulario de creaccion de entrenadores 
        $organizacion=$_POST;
 
-      // Kint::dump($entrenador);
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
         $organizacionM = new Organizacion($con);
         //Cargamos los entrenadores
-        $organizacion = $organizacionM->insertar($organizacion);
+        $organizacion = $organizacionM->modificar($organizacion);
          //Cargamos la vista
         Utils::redirect('/');
-
     }
 
     public function eliminarOrganizacion($datos)
