@@ -28,7 +28,7 @@
             <input type="number" name="idorganizacion" id="idorganizacion" maxlength="3" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
-        <a href="/unidades" class="btn btn-secondary">Cancelar</a>
+        <a href="/organizaciones" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 </body>

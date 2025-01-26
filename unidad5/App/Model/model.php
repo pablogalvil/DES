@@ -82,6 +82,39 @@ class Model
         }
     }
 
+    function cargarTodoPaginadoDetalle($num_pag, $elem_pag, $id, $tabla, $tabla2)
+    {
+
+        try {
+
+            //query que muestra de forma paginada los datos
+            $sql = "select * from $tabla WHERE id$tabla2 = :id limit :elem_pag offset :offset";
+
+            //Utilizamos la conexion activa de nuestro objeto
+            //Para crear la sentencia sql
+           
+            $stmt = $this->con->prepare($sql);
+
+            //Asignamos la forma de devolver los datos
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':elem_pag', $elem_pag, PDO::PARAM_INT);
+            $offset = ($elem_pag * ($num_pag - 1));
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            //Ejecutamos la sentencia substituyendo las interrogacions por los valores
+            //Que metemos dentro del array que le pasamos a execute
+            $resultado = $stmt->execute();
+
+            //Si ha ido bien devolvemos los datos
+            if ($resultado) return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            //Hubo un problema al eliminar el registro
+            echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
+            return false;
+        }
+    }
+
     /**
      * borrar
      *

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
             <input type="text" name="ubicacion" id="ubicacion" maxlength="50" class="form-control" required>
         </div>
         <div class="mb-3">
-            <label for="aniocreacion" class="form-label">Antiguedad</label>
+            <label for="aniocreacion" class="form-label">Año de creacion</label>
             <input type="number" name="aniocreacion" id="aniocreacion" maxlength="4" class="form-control" required>
         </div>
         <div class="mb-3">

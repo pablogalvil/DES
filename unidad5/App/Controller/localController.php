@@ -14,9 +14,9 @@ class LocalController
         //Creamos el modelo
         $localM = new Local($con);
         //Cargamos los entrenadores
-        $local = $localM->cargarTodoPaginado(1,200);
+        $locales = $localM->cargarTodoPaginado(1,200);
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("local");
+        $datos = compact("locales");
 
         
         //Cargamos la vista
@@ -55,7 +55,7 @@ class LocalController
         //Cargamos los entrenadores
         $local = $localM->insertar($local);
          //Cargamos la vista
-        Utils::redirect('/');
+        Utils::redirect('/locales');
 
     }
 
@@ -76,7 +76,7 @@ class LocalController
         //Cargamos los entrenadores
         $local = $localM->modificar($local);
          //Cargamos la vista
-        Utils::redirect('/');
+        Utils::redirect('/locales');
 
     }
 

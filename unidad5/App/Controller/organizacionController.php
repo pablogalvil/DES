@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Utils\Utils;
 use App\Model\Organizacion;
+use App\Model\Unidad;
 
 class OrganizacionController
 {
@@ -14,7 +15,7 @@ class OrganizacionController
         //Creamos el modelo
         $organizacionM = new Organizacion($con);
         //Cargamos los entrenadores
-        $organizaciones = $organizacionM->cargarTodoPaginado(1,200);
+        $organizaciones = $organizacionM->cargarTodoPaginado(1,20);
         //Compactamos los datos que necesita la vista para luego pasarselos
         $datos = compact("organizaciones");
 
@@ -30,10 +31,12 @@ class OrganizacionController
         $con = Utils::getConnection();
         //Creamos el modelo
         $organizacionM = new Organizacion($con);
+        $unidadM = new Unidad($con);
         //Cargamos los entrenadores
         $organizacion = $organizacionM->cargar($datos['id']);
+        $unidades = $unidadM->cargarTodoPaginadoDetalle(1, 20, $datos['id'], "unidad", "organizacion");
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("organizacion");
+        $datos= compact("organizacion", "unidades");
          //Cargamos la vista
         Utils::render('verOrganizacion',$datos);
     }

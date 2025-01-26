@@ -32,6 +32,32 @@
             <td><?= $organizacion['territorio'] ?></td>
         </tr>
     </table>
+    <div class="container mt-4">
+    <h1 class="text-center">Lista de Unidades</h1>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Rango</th>
+            <th>Ubicacion</th>
+            <th>Antiguedad</th>
+            <th>ID de su Organizacion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($unidades as $unidad): ?>
+            <tr>
+                <td><?= $unidad['idunidad'] ?></td>
+                <td><?= $unidad['rango'] ?></td>
+                <td><?= $unidad['ubicacion'] ?></td>
+                <td><?= $unidad['antiguedad'] ?></td>
+                <td><?= $unidad['idorganizacion']?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    </div>
 
     <a href="/" class="btn btn-secondary">Volver al listado</a>
 </div>

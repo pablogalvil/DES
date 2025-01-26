@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Locales</title>
+    <title>Lista de Rivalidades</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .navbar {
@@ -31,7 +31,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Locales</a>
+            <a class="navbar-brand" href="#">Rivalidades</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -44,41 +44,37 @@
                         <a class="nav-link" href="/unidades">Unidades</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/rivalidades">Rivalidades</a>
+                        <a class="nav-link" href="/locales">Locales</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container mt-4">
-        <h1 class="margen text-center">Lista de Locales</h1>
-        <a href="/locales/crear" class="btn btn-success mb-3">Agregar Nuevo Local</a>
+        <h1 class="margen text-center">Lista de Rivalidades</h1>
+        <a href="/rivalidades/crear" class="btn btn-success mb-3">Agregar Nueva Rivalidad</a>
 
         <table class="table table-bordered">
             <thead class="table-dark">
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Ubicacion</th>
-                <th>Año de Creacion</th>
-                <th>ID de su Organizacion</th>
+                <th>ID de la organizacion</th>
+                <th>ID de la Organizacion Rival</th>
+                <th>Zona de conflicto</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($locales as $local): ?>
+            <?php foreach ($rivalidades as $rivalidad): ?>
                 <tr>
-                    <td><?= $local['idlocal'] ?></td>
-                    <td><?= $local['nombre'] ?></td>
-                    <td><?= $local['tipo'] ?></td>
-                    <td><?= $local['ubicacion'] ?></td>
-                    <td><?= $local['aniocreacion'] ?></td>
-                    <td><?= $local['idorganizacion']?></td>
+                    <td><?= $rivalidad['idrivalidad'] ?></td>
+                    <td><?= $rivalidad['idorganizacion'] ?></td>
+                    <td><?= $rivalidad['idorganizacionrival'] ?></td>
+                    <td><?= $rivalidad['zonaconflicto'] ?></td>
                     <td>
-                        <a href="/locales/<?= $local['idlocal'] ?>" class="btn btn-info btn-sm">Ver</a>
-                        <a href="/locales/<?= $local['idlocal'] ?>/modificar" class="btn btn-warning btn-sm">Editar</a>
-                        <a href="/locales/<?= $local['idlocal'] ?>/eliminar" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="/rivalidades/<?= $rivalidad['idrivalidad'] ?>" class="btn btn-info btn-sm">Ver</a>
+                        <a href="/rivalidades/<?= $rivalidad['idrivalidad'] ?>/modificar" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="/rivalidades/<?= $rivalidad['idrivalidad'] ?>/eliminar" class="btn btn-danger btn-sm">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

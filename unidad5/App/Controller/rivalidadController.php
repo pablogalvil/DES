@@ -2,95 +2,96 @@
 namespace App\Controller;
 
 use App\Utils\Utils;
-use App\Model\Unidad;
+use App\Model\Rivalidad;
 
-class UnidadController
+class RivalidadController
 {
 
-    public function mostrarUnidades()
+    public function mostrarRivalidades()
     {
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
-        $unidadM = new Unidad($con);
+        $rivalidadM = new Rivalidad($con);
         //Cargamos los entrenadores
-        $unidades = $unidadM->cargarTodoPaginado(1,200);
+        $rivalidades = $rivalidadM->cargarTodoPaginado(1,20);
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("unidades");
+        $datos = compact("rivalidades");
 
         
         //Cargamos la vista
-        Utils::render('listaUnidades',$datos);
+        Utils::render('listaRivalidades',$datos);
         
     }
 
-    public function mostrarUnidad($datos)
+    public function mostrarRivalidad($datos)
     {
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
-        $unidadM = new Unidad($con);
+        $rivalidadM = new Rivalidad($con);
         //Cargamos los entrenadores
-        $unidad = $unidadM->cargar($datos['id']);
+        $rivalidad = $rivalidadM->cargar($datos['id']);
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("unidad");
+        $datos = compact("rivalidad");
          //Cargamos la vista
-        Utils::render('verUnidad',$datos);
+        Utils::render('verRivalidad',$datos);
     }
 
-    public function crearUnidad()
+    public function crearRivalidad()
     {
-        Utils::render('crearUnidad');
+        Utils::render('crearRivalidad');
     }
 
-    public function insertarUnidad()
+    public function insertarRivalidad()
     {
         //Guardo los datos del formulario de creaccion de entrenadores 
-        $unidad=$_POST;
+        $rivalidad=$_POST;
 
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
-        $unidadM = new Unidad($con);
+        $rivalidadM = new Rivalidad($con);
         //Cargamos los entrenadores
-        $unidad = $unidadM->insertar($unidad);
+        $rivalidad = $rivalidadM->insertar($rivalidad);
          //Cargamos la vista
-        Utils::redirect('/unidades');
+        Utils::redirect('/rivalidades');
 
     }
 
-    public function editarUnidad($id)
+    public function editarRivalidad($id)
     {
-        Utils::render('editarUnidad', $id);
+        Utils::render('editarRivalidad', $id);
     }
 
-    public function modificarUnidad()
+    public function modificarRivalidad()
     {
         //Guardo los datos del formulario de creaccion de entrenadores 
-        $unidad=$_POST;
+        $rivalidad=$_POST;
 
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
-        $unidadM = new Unidad($con);
+        $rivalidadM = new Rivalidad($con);
         //Cargamos los entrenadores
-        $unidad = $unidadM->modificar($unidad);
+        $rivalidad = $rivalidadM->modificar($rivalidad);
          //Cargamos la vista
-        Utils::redirect('/unidades');
+        Utils::redirect('/rivalidades');
 
     }
 
-    public function eliminarUnidad($datos)
+    public function eliminarRivalidad($datos)
     {
 
        //Nos conectamos a la bd
        $con = Utils::getConnection();
        //Creamos el modelo
-       $unidadM = new Unidad($con);
+       $rivalidadM = new Rivalidad($con);
        //borramos el entrenador
-       $unidadM->borrar($datos['id']);
+       $rivalidadM->borrar($datos['id']);
+
        //Cargamos la vista
-       Utils::redirect('/unidades');
+       Utils::redirect('/rivalidades');
     }
 
 }

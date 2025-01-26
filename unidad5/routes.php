@@ -35,10 +35,10 @@ return(function (RouteCollector $r) {
 
 
     //Listado de locales
-    $r->addRoute('GET', '/', ['App\Controller\OrganizacionController', 'mostrarOrganizaciones']);
-    $r->addRoute('GET', '/listaOrganizaciones/{pagina:\d+}', ['App\Controller\OrganizacionController', 'mostrarOrganizaciones']);
-    $r->addRoute('POST', '/', ['App\Controller\OrganizacionController', 'mostrarOrganizacionesFiltrado']);
-    $r->addRoute('GET', '/organizaciones/{id:\d+}', ['App\Controller\OrganizacionController', 'mostrarOrganizacion']);
+    $r->addRoute('GET', '/locales', ['App\Controller\LocalController', 'mostrarLocales']);
+    $r->addRoute('GET', '/listaLocales/{pagina:\d+}', ['App\Controller\LocalController', 'mostrarLocales']);
+    $r->addRoute('POST', '/locales', ['App\Controller\LocalController', 'mostrarLocalesFiltrado']);
+    $r->addRoute('GET', '/locales/{id:\d+}', ['App\Controller\LocalController', 'mostrarLocal']);
     
     //Cambiar datos en un local
     $r->addRoute('GET','/locales/crear',['App\Controller\LocalController', 'crearLocal']);
@@ -46,5 +46,18 @@ return(function (RouteCollector $r) {
     $r->addRoute('GET','/locales/{id:\d+}/modificar',['App\Controller\LocalController', 'editarLocal']);
     $r->addRoute('POST','/locales/modificar',['App\Controller\LocalController', 'modificarLocal']);
     $r->addRoute('GET','/locales/{id:\d+}/eliminar',['App\Controller\LocalController', 'eliminarLocal']);
+
+    //Listado de rivalidades
+    $r->addRoute('GET', '/rivalidades', ['App\Controller\RivalidadController', 'mostrarRivalidades']);
+    $r->addRoute('GET', '/listaRivalidades/{pagina:\d+}', ['App\Controller\RivalidadController', 'mostrarRivalidades']);
+    $r->addRoute('POST', '/rivalidades', ['App\Controller\RivalidadController', 'mostrarRivalidadesFiltrado']);
+    $r->addRoute('GET', '/rivalidades/{id:\d+}', ['App\Controller\RivalidadController', 'mostrarRivalidad']);
+    
+    //Cambiar datos en un rivalidad
+    $r->addRoute('GET','/rivalidades/crear',['App\Controller\RivalidadController', 'crearRivalidad']);
+    $r->addRoute('POST','/rivalidades/crear',['App\Controller\RivalidadController', 'insertarRivalidad']);
+    $r->addRoute('GET','/rivalidades/{id:\d+}/modificar',['App\Controller\RivalidadController', 'editarRivalidad']);
+    $r->addRoute('POST','/rivalidades/modificar',['App\Controller\RivalidadController', 'modificarRivalidad']);
+    $r->addRoute('GET','/rivalidades/{id:\d+}/eliminar',['App\Controller\RivalidadController', 'eliminarRivalidad']);
 });
 ?>

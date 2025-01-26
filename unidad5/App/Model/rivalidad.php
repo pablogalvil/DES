@@ -1,14 +1,15 @@
-<?php
+<?php 
 namespace App\Model;
 
 use App\Model\Model;
-class Arma extends Model
+class Rivalidad extends Model
 {
     function __construct($con)
     {
         parent::__construct($con);
-        $this->table="armas";
+        $this->table="rivalidad";
 
     }
 }
+
 ?>
