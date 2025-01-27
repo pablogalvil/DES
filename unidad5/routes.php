@@ -1,5 +1,4 @@
 <?php
-namespace rutas;
 use FastRoute\RouteCollector;
 
 return(function (RouteCollector $r) {
