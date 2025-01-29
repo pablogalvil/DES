@@ -81,6 +81,7 @@
             <?php endforeach; ?>
             </tbody>
         </table>
+        <a href='logout.php'>Cerrar sesión</a>
     </div>
 </body>
 </html>
