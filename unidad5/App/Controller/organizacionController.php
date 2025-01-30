@@ -8,16 +8,21 @@ use App\Model\Unidad;
 class OrganizacionController
 {
 
-    public function mostrarOrganizaciones()
+    public function mostrarOrganizaciones($datos)
     {
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
         $organizacionM = new Organizacion($con);
         //Cargamos los entrenadores
-        $organizaciones = $organizacionM->cargarTodoPaginado(1,20);
+        $organizaciones = $organizacionM->cargarTodoPaginado($datos['pagina'],10);
+        $contarOrganizaciones = $organizacionM->contarTotalRegistros();
+        $pagina = $datos['pagina'];
+
+        $totalPaginas = ceil($contarOrganizaciones / 10);
+
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("organizaciones");
+        $datos = compact("organizaciones", "pagina", "totalPaginas");
 
         
         //Cargamos la vista
@@ -59,7 +64,7 @@ class OrganizacionController
         //Cargamos los entrenadores
         $organizacion = $organizacionM->insertar($organizacion);
         //Cargamos la vista
-        Utils::redirect('/');
+        Utils::redirect('/listaOrganizaciones/1');
 
     }
 
@@ -80,7 +85,7 @@ class OrganizacionController
         //Cargamos los entrenadores
         $organizacion = $organizacionM->modificar($organizacion);
          //Cargamos la vista
-        Utils::redirect('/');
+        Utils::redirect('/listaOrganizaciones/1');
     }
 
     public function eliminarOrganizacion($datos)
@@ -93,7 +98,7 @@ class OrganizacionController
        //borramos el entrenador
        $organizacionM->borrar($datos['id']);
        //Cargamos la vista
-       Utils::redirect('/');
+       Utils::redirect('/listaOrganizaciones/1');
     }
 
 }

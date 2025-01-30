@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+    <?php 
+    use App\utils\Utils;
+    ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +28,9 @@
         }
         .margen{
             margin-top: 60px;
+        }
+        a{
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -81,7 +87,26 @@
             <?php endforeach; ?>
             </tbody>
         </table>
-        <a href='logout.php'>Cerrar sesión</a>
+
+        <?php 
+        if($pagina > 1){
+            echo "<a href='/listaOrganizaciones/".($pagina-1)."' class='btn btn-dark btn-sm'>Anterior</a>";
+        }
+
+        for($i = 1; $i <= $totalPaginas; $i++){
+            if($i == $pagina){
+                echo "<a href='/listaOrganizaciones/$i' class='btn btn-success btn-sm'>$i</a>";
+            } else {
+                echo "<a href='/listaOrganizaciones/$i' class='btn btn-link btn-sm'>$i</a>";
+            }
+        }
+        
+        if($pagina < $totalPaginas){
+            echo "<a href='/listaOrganizaciones/".($pagina+1)."' class='btn btn-dark btn-sm'>Siguiente</a>";
+        }
+        ?>
+        <br>
+        <a href='/logout' class='btn btn-danger btn-sm'>Cerrar sesión</a>
     </div>
 </body>
 </html>

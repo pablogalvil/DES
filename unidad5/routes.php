@@ -5,10 +5,15 @@ return(function (RouteCollector $r) {
 
     //Con addroute voy añadiendo rutas url por get o por post a las que responderemos
     //Las que no esten aquí darán fallo
+    //Inicio de sesion
+    $r->addRoute('GET', '/', ['App\Controller\MiembroController', 'cargarLogin']);
+    $r->addRoute('POST', '/', ['App\Controller\MiembroController', 'login']);
+    $r->addRoute('GET', '/logout', ['logout.php']);
+    $r->addRoute('GET', '/registro', ['App\Controller\MiembroController', 'cargarRegistro']);
+    $r->addRoute('POST', '/registro', ['App\Controller\MiembroController', 'registro']);
+
     //Listado de organizacion
-    $r->addRoute('GET', '/', ['App\Controller\OrganizacionController', 'mostrarOrganizaciones']);
     $r->addRoute('GET', '/listaOrganizaciones/{pagina:\d+}', ['App\Controller\OrganizacionController', 'mostrarOrganizaciones']);
-    $r->addRoute('POST', '/', ['App\Controller\OrganizacionController', 'mostrarOrganizacionesFiltrado']);
     $r->addRoute('GET', '/organizaciones/{id:\d+}', ['App\Controller\OrganizacionController', 'mostrarOrganizacion']);
     
     //Cambiar datos en una organizacion

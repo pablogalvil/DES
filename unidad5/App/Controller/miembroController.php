@@ -1,95 +1,59 @@
 <?php namespace App\Controller;
 
 use App\Utils\Utils;
+use App\Model\Model;
 use App\Model\Miembro;
+use App\Model\Unidad;
+use PDO;
 
 class MiembroController
 {
+    public function cargarLogin() {
+        Utils::render('login');
+    }
 
-    public function mostrarMiembros()
-    {
-        //Nos conectamos a la bd
+    public function login(){
+        session_start();
         $con = Utils::getConnection();
-        //Creamos el modelo
-        $miembroM = new Miembro($con);
-        //Cargamos los entrenadores
-        $miembro = $miembroM->cargarTodoPaginado(1,200);
-        //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("miembro");
 
-        
-        //Cargamos la vista
-        Utils::render('listaMiembros',$datos);
+        $nombre = $_POST['nombre'];
+        $contrasenia = $_POST['contrasenia'];
+        $stmt = $con->prepare("SELECT idmiembro, contrasenia FROM miembro WHERE nombre = :nombre");
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->execute();
+        $miembro = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($miembro && password_verify($contrasenia, $miembro['contrasenia'])) {
+            $_SESSION['user_id'] = $miembro['idmiembro'];
+            Utils::redirect('/listaOrganizaciones/1');
+            exit;
+        } else {
+            $error = "Credenciales incorrectas";
+            Utils::render('login', compact('error'));
+        }
         
     }
 
-    public function mostrarMiembro($datos)
+    public function cargarRegistro()
     {
-        //Nos conectamos a la bd
         $con = Utils::getConnection();
-        //Creamos el modelo
-        $miembroM = new Miembro($con);
-        //Cargamos los entrenadores
-        $miembro = $miembroM->cargar($datos['id']);
-        //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("miembro");
-         //Cargamos la vista
-        Utils::render('verMiembro',$datos);
+        $unidadM = new Unidad($con);
+        $unidades = $unidadM->cargarIds("organizacion");
+
+        $datos = compact("unidades");
+
+        Utils::render('registro', $datos);
     }
 
-    public function crearMiembro()
-    {
-        Utils::render('crearMiembro');
-    }
-
-    public function insertarMiembro()
-    {
-        //Guardo los datos del formulario de creaccion de entrenadores 
+    public function registro() {
         $miembro=$_POST;
-
-        //Nos conectamos a la bd
+        $miembro["contrasenia"] = password_hash($miembro["contrasenia"], PASSWORD_DEFAULT);
         $con = Utils::getConnection();
         //Creamos el modelo
         $miembroM = new Miembro($con);
         //Cargamos los entrenadores
         $miembro = $miembroM->insertar($miembro);
-         //Cargamos la vista
+
         Utils::redirect('/');
-
-    }
-
-    public function editarMiembro($id)
-    {
-        Utils::render('editarMiembro', $id);
-    }
-
-    public function modificarMiembro()
-    {
-        //Guardo los datos del formulario de creaccion de entrenadores 
-        $miembro=$_POST;
-
-        //Nos conectamos a la bd
-        $con = Utils::getConnection();
-        //Creamos el modelo
-        $miembroM = new Miembro($con);
-        //Cargamos los entrenadores
-        $miembro = $miembroM->modificar($miembro);
-         //Cargamos la vista
-        Utils::redirect('/');
-
-    }
-
-    public function eliminarMiembro($datos)
-    {
-
-       //Nos conectamos a la bd
-       $con = Utils::getConnection();
-       //Creamos el modelo
-       $miembroM = new Miembro($con);
-       //borramos el entrenador
-       $miembroM->borrar($datos['id']);
-       //Cargamos la vista
-       Utils::redirect('/');
     }
 
 }

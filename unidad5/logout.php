@@ -1,7 +1,8 @@
 <?php
+use App\utils\Utils;
 session_start();
 session_unset();
 session_destroy();
-header("Location: login.php");
+Utils::redirect('/');
 exit;
 ?>

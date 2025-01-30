@@ -22,6 +22,14 @@ class Model
         if ($con != null && $this->con==null) $this->con = $con;
     }
 
+    public function contarTotalRegistros() {
+        $sql = "SELECT COUNT(*) as total FROM $this->table";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute();
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int) $resultado['total'];
+    }
+
     function cargar($id)
     {
         try {
@@ -43,6 +51,32 @@ class Model
 
             //Si ha ido bien devolvemos los datos
             if ($resultado) return $stmt->fetch();
+        } catch (PDOException $e) {
+            //Hubo un problema al eliminar el registro
+            echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
+            return false;
+        }
+    }
+
+    function cargarIds($tabla)
+    {
+        try {
+
+            //query que muestra de forma paginada los datos
+            $sql = "select id".$this->table.", id".$tabla." from $this->table";
+
+            //Utilizamos la conexion activa de nuestro objeto
+            //Para crear la sentencia sql
+            $stmt = $this->con->prepare($sql);
+
+            //Asignamos la forma de devolver los datos
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+           
+            //Que metemos dentro del array que le pasamos a execute
+            $resultado = $stmt->execute();
+
+            //Si ha ido bien devolvemos los datos
+            if ($resultado) return $stmt->fetchAll();
         } catch (PDOException $e) {
             //Hubo un problema al eliminar el registro
             echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
