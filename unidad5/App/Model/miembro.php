@@ -7,7 +7,7 @@ class Miembro extends Model
     function __construct($con)
     {
         parent::__construct($con);
-        $this->table="miembros";
+        $this->table="miembro";
 
     }
 }

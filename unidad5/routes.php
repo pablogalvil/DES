@@ -8,7 +8,7 @@ return(function (RouteCollector $r) {
     //Inicio de sesion
     $r->addRoute('GET', '/', ['App\Controller\MiembroController', 'cargarLogin']);
     $r->addRoute('POST', '/', ['App\Controller\MiembroController', 'login']);
-    $r->addRoute('GET', '/logout', ['logout.php']);
+    $r->addRoute('GET', '/logout', ['App\Controller\MiembroController', 'logout']);
     $r->addRoute('GET', '/registro', ['App\Controller\MiembroController', 'cargarRegistro']);
     $r->addRoute('POST', '/registro', ['App\Controller\MiembroController', 'registro']);
 

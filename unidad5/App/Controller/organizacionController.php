@@ -41,7 +41,7 @@ class OrganizacionController
         $organizacion = $organizacionM->cargar($datos['id']);
         $unidades = $unidadM->cargarTodoPaginadoDetalle(1, 20, $datos['id'], "unidad", "organizacion");
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos= compact("organizacion", "unidades");
+        $datos = compact("organizacion", "unidades");
          //Cargamos la vista
         Utils::render('verOrganizacion',$datos);
     }
@@ -59,6 +59,22 @@ class OrganizacionController
       // Kint::dump($entrenador);
         //Nos conectamos a la bd
         $con = Utils::getConnection();
+
+        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+            // Obtener el nombre del archivo y su extensión
+            $nombreArchivo = basename($_FILES['imagen']['name']);
+            $rutaFinal = $_SERVER['DOCUMENT_ROOT'] . "\img\\" . $nombreArchivo;
+    
+            // Mover la imagen desde la carpeta temporal a la definitiva
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaFinal)) {
+                $organizacion['imagen'] = $nombreArchivo; // Guardamos solo la ruta en la BD
+            } else {
+                $organizacion['imagen'] = null; // Si falla, guardamos NULL
+            }
+        } else {
+            $organizacion['imagen'] = null; // Si no hay imagen, guardamos NULL
+        }
+
         //Creamos el modelo
         $organizacionM = new Organizacion($con);
         //Cargamos los entrenadores

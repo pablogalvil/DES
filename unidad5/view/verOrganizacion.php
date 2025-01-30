@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+    include 'auth.php';
+    ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +34,10 @@
             <th>Territorio</th>
             <td><?= $organizacion['territorio'] ?></td>
         </tr>
+        <tr>
+            <th>Imagen</th>
+            <td><img src='../img/<?php echo $organizacion['imagen'] ?>'></td>
+        </tr>
     </table>
     <div class="container mt-4">
     <h1 class="text-center">Lista de Unidades</h1>
@@ -59,7 +66,7 @@
 
     </div>
 
-    <a href="/" class="btn btn-secondary">Volver al listado</a>
+    <a href="/listaOrganizaciones/1" class="btn btn-secondary">Volver al listado</a>
 </div>
 </body>
 </html>

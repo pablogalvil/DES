@@ -2,6 +2,7 @@
 <html lang="en">
     <?php 
     use App\utils\Utils;
+    include 'auth.php';
     ?>
 <head>
     <meta charset="UTF-8">
