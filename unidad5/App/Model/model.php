@@ -274,6 +274,7 @@ class Model
                 //gettype($datos[$campos[$i]])=="int"?PDO::PARAM_INT:PDO::PARAM_STR;
                 $stmt->bindValue(':'.$campos[$i], $datos[$campos[$i]],$tipo);
             }
+            
             $resultado = $stmt->execute($datos);
 
             //Devolvemos el resultado de la ejecucion de la sentencia

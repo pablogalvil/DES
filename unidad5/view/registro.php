@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +46,7 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="contrasenia" class="form-label">Contrasenia</label>
+            <label for="contrasenia" class="form-label">Contraseña</label>
             <input type="password" name="contrasenia" id="contrasenia" class="form-control border border-black" required>
         </div>
         <button type="submit" class="btn btn-success">Registrarse</button>

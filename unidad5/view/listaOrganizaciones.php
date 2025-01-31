@@ -34,6 +34,35 @@
             margin-left: 10px;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $(".load-organization").click(function(event) {
+            event.preventDefault();  // Evita que el enlace haga una recarga de la página
+
+            var orgId = $(this).data("id");  // Obtiene el ID de la organización
+            var url = "/organizaciones/" + orgId;  // Construye la URL para la petición
+
+            $.ajax({
+                url: "/organizaciones/" + orgId,
+                type: "GET",
+                headers: { "X-Requested-With": "XMLHttpRequest" },
+                success: function(response) {
+                    $("#organization-content").html(response);
+                },
+                error: function(xhr) {
+                    if (xhr.status === 401) { 
+                        // Si la sesión expiró, recargar la página para redirigir al login
+                        alert("Tu sesión ha expirado. Serás redirigido al login.");
+                        window.location.href = "/";
+                    } else {
+                        $("#organization-content").html("<p>Error al cargar la organización.</p>");
+                    }
+                }
+            });
+        });
+    });
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -75,12 +104,11 @@
             <?php foreach ($organizaciones as $organizacion): ?>
                 <tr>
                     <td><?= $organizacion['idorganizacion'] ?></td>
-                    <td><?= $organizacion['nombre'] ?></td>
+                    <td><a href="/organizaciones/<?= $organizacion['idorganizacion'] ?>" class="btn btn-link btn-sm load-organization" data-id="<?= $organizacion['idorganizacion'] ?>"><?= $organizacion['nombre'] ?></a></td>
                     <td><?= $organizacion['numrivales'] ?></td>
                     <td><?= $organizacion['pais'] ?></td>
                     <td><?= $organizacion['territorio']?></td>
                     <td>
-                        <a href="/organizaciones/<?= $organizacion['idorganizacion'] ?>" class="btn btn-info btn-sm">Ver</a>
                         <a href="/organizaciones/<?= $organizacion['idorganizacion'] ?>/modificar" class="btn btn-warning btn-sm">Editar</a>
                         <a href="/organizaciones/<?= $organizacion['idorganizacion'] ?>/eliminar" class="btn btn-danger btn-sm">Eliminar</a>
                     </td>
@@ -107,6 +135,9 @@
         }
         ?>
         <br>
+        <div id="organization-content">
+            <!-- Aquí se cargará el contenido de la organización -->
+        </div>
         <a href='/logout' class='btn btn-danger btn-sm'>Cerrar sesión</a>
     </div>
 </body>
