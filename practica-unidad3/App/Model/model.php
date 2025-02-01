@@ -22,6 +22,10 @@ class Model
         if ($con != null && $this->con==null) $this->con = $con;
     }
 
+    /**
+     * Funcion para contar el total de registros de una tabla
+     * @return int Total de registros
+     */
     public function contarTotalRegistros() {
         $sql = "SELECT COUNT(*) as total FROM $this->table";
         $stmt = $this->con->prepare($sql);
@@ -30,60 +34,64 @@ class Model
         return (int) $resultado['total'];
     }
 
+    /**
+     * Funcion para cargar todos los campos de un elemento por su id
+     * @param int $id Identificador del elemento
+     * @return array Elemento cargado
+     */
     function cargar($id)
     {
         try {
 
-            //query que muestra de forma paginada los datos
+            //Query que saca todos los datos por su id
             $sql = "select * from $this->table where id".$this->table." = :id";
 
-            //Utilizamos la conexion activa de nuestro objeto
-            //Para crear la sentencia sql
             $stmt = $this->con->prepare($sql);
 
             //Asignamos la forma de devolver los datos
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-           
-            //Que metemos dentro del array que le pasamos a execute
             $resultado = $stmt->execute();
 
             //Si ha ido bien devolvemos los datos
             if ($resultado) return $stmt->fetch();
         } catch (PDOException $e) {
-            //Hubo un problema al eliminar el registro
-            echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
+            echo 'Hubo un problema al consultar el registro: ' . $e->getMessage();
             return false;
         }
     }
 
+    /**
+     * Funcion para cargar los ids de un elemento
+     * @return array Elemento cargado con los ids
+     */
     function cargarIds($tabla)
     {
         try {
 
-            //query que muestra de forma paginada los datos
+            //query que saca los ids
             $sql = "select id".$this->table.", id".$tabla." from $this->table";
 
-            //Utilizamos la conexion activa de nuestro objeto
-            //Para crear la sentencia sql
             $stmt = $this->con->prepare($sql);
 
             //Asignamos la forma de devolver los datos
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
-           
-            //Que metemos dentro del array que le pasamos a execute
             $resultado = $stmt->execute();
 
             //Si ha ido bien devolvemos los datos
             if ($resultado) return $stmt->fetchAll();
         } catch (PDOException $e) {
-            //Hubo un problema al eliminar el registro
-            echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
+            echo 'Hubo un problema al obtener el registro: ' . $e->getMessage();
             return false;
         }
     }
 
+    /**
+     * Funcion que carga todos los datos de una tabla de forma paginada
+     * @param int $num_pag Numero de la pagina
+     * @param int $elem_pag Elementos por pagina
+     * @return array Elementos cargados con todos los datos de la tabla en esa pagina
+     */
     function cargarTodoPaginado($num_pag, $elem_pag)
     {
 
@@ -92,99 +100,92 @@ class Model
             //query que muestra de forma paginada los datos
             $sql = "select * from $this->table limit :elem_pag offset :offset";
 
-            //Utilizamos la conexion activa de nuestro objeto
-            //Para crear la sentencia sql
-           
             $stmt = $this->con->prepare($sql);
 
             //Asignamos la forma de devolver los datos
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
+            //Le asignamos los parametros, calculando el offset
             $stmt->bindParam(':elem_pag', $elem_pag, PDO::PARAM_INT);
             $offset = ($elem_pag * ($num_pag - 1));
             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-            //Ejecutamos la sentencia substituyendo las interrogacions por los valores
-            //Que metemos dentro del array que le pasamos a execute
+
             $resultado = $stmt->execute();
 
             //Si ha ido bien devolvemos los datos
             if ($resultado) return $stmt->fetchAll();
         } catch (PDOException $e) {
-            //Hubo un problema al eliminar el registro
-            echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
+            echo 'Hubo un problema al obtener los registros: ' . $e->getMessage();
             return false;
         }
     }
 
-    function cargarTodoPaginadoDetalle($num_pag, $elem_pag, $id, $tabla, $tabla2)
+    /**
+     * Funcion que carga todos los datos de una tabla relacionada con la entidad principal
+     * @param int $id Identificador de la entidad principal
+     * @param string $tabla Tabla relacionada
+     * @param string $tabla2 Tabla principal
+     * @return array Elementos cargados con todos los datos de la tabla en ese id
+     */
+    function cargarTodoDetalle($id, $tabla, $tabla2)
     {
 
         try {
 
-            //query que muestra de forma paginada los datos
-            $sql = "select * from $tabla WHERE id$tabla2 = :id limit :elem_pag offset :offset";
+            //query que saca los datos a partir del id de la otra tabla
+            $sql = "select * from $tabla WHERE id$tabla2 = :id";
 
-            //Utilizamos la conexion activa de nuestro objeto
-            //Para crear la sentencia sql
-           
             $stmt = $this->con->prepare($sql);
 
             //Asignamos la forma de devolver los datos
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmt->bindParam(':elem_pag', $elem_pag, PDO::PARAM_INT);
-            $offset = ($elem_pag * ($num_pag - 1));
-            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-            //Ejecutamos la sentencia substituyendo las interrogacions por los valores
-            //Que metemos dentro del array que le pasamos a execute
             $resultado = $stmt->execute();
 
             //Si ha ido bien devolvemos los datos
             if ($resultado) return $stmt->fetchAll();
         } catch (PDOException $e) {
-            //Hubo un problema al eliminar el registro
-            echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
+            echo 'Hubo un problema al obtener los registros: ' . $e->getMessage();
             return false;
         }
     }
 
     /**
-     * borrar
-     *
-     * @param  mixed $idEntrenador
-     * @return el resultado de la operacion 0 si hay fallo 1 si ha ido bien (true o false)
+     * Funcion que elimina un elemento por su id
+     * @param int $id Identificador del elemento
+     * @return bool Devuelve true si ha ido bien y false si ha ido mal
      */
     function borrar($id)
     {
 
         try {
 
-            //Vamos a hacer un ejemplo en el cual borramos el entrenador numero 4
+            //Query que borra el elemento a partir de su id
             $sql = "delete from $this->table where id" . $this->table . " = ?";
 
-            //Utilizamos la conexion activa de nuestro objeto
-            //Para crear la sentencia sql
             $stmt = $this->con->prepare($sql);
 
-            //Ejecutamos la sentencia substituyendo las interrogacions por los valores
-            //Que metemos dentro del array que le pasamos a execute
             $resultado = $stmt->execute([$id]);
 
             //Devolvemos el resultado de la ejecucion de la sentencia
             return $resultado;
         } catch (PDOException $e) {
-            //Hubo un problema al eliminar el registro
             echo 'Hubo un problema al eliminar el registro: ' . $e->getMessage();
             return false;
         }
     }
 
+    /**
+     * Funcion que inserta un elemento en la base de datos
+     * @param array $datos Elemento a insertar
+     * @return bool Devuelve true si ha ido bien y false si ha ido mal
+     */
     function insertar($datos)
     {
         try {
 
-            //Vamos a hacer un ejemplo en el cual borramos el entrenador numero 4
+            //Empezamos construyendo la query con la sentencia INSERT INTO
             $sql = "INSERT INTO $this->table (";
 
             //Sacamos las claves que corresponden con los nombres de los campos
@@ -209,22 +210,18 @@ class Model
             //Por ultimo cerramos el parentesis del VALUE
             $sql .= ")";
 
-            //Utilizamos la conexion activa de nuestro objeto
-            //Para crear la sentencia sql
             $stmt = $this->con->prepare($sql);
 
+            //Sacamos la query que se va a ejecutar para depurar errores
             echo $stmt->queryString;
 
             
 
-            //Ejecutamos la sentencia substituyendo las interrogacions por los valores
-            //Que metemos dentro del array que le pasamos a execute
-
+            //Vamos añadiendo los valores uno a uno
             for ($i = 0; $i < count($campos); $i++) {
                 //Dependiendo del tipo de dato le pongo el tipo de parametro pdo asociado
                 //Usando la funcion obtenertipoparametro
                 $tipo = Utils::obtenerTipoParametro($datos[$campos[$i]]);
-                //gettype($datos[$campos[$i]])=="int"?PDO::PARAM_INT:PDO::PARAM_STR;
                 $stmt->bindValue(':'.$campos[$i], $datos[$campos[$i]],$tipo);
             }
             $resultado = $stmt->execute($datos);
@@ -232,23 +229,27 @@ class Model
             //Devolvemos el resultado de la ejecucion de la sentencia
             return $resultado;
         } catch (PDOException $e) {
-            //Hubo un problema al eliminar el registro
             echo 'Hubo un problema al insertar el registro: ' . $e->getMessage();
             return false;
         }
     }
 
+    /**
+     * Funcion que modifica un elemento en la base de datos a partir de su id
+     * @param array $datos Elemento a modificar y su id
+     * @return bool Devuelve true si ha ido bien y false si ha ido mal
+     */
     function modificar($datos)
     {
         try {
 
-            //Vamos a hacer un ejemplo en el cual borramos el entrenador numero 4
+            //Empezamos construyendo la query
             $sql = "UPDATE $this->table SET ";
 
             //Sacamos las claves que corresponden con los nombres de los campos
             $campos = array_keys($datos);
 
-            //Primero añadimos los nombres de los campos que vienen como claves en el array asociativo
+            //Añadimos los nombres de los campos que vienen como claves en el array asociativo y los igualamos a los valores
             for ($i = 0; $i < count($campos) - 1; $i++) {
                 if ($i < count($campos) - 2)
                     $sql .= "$campos[$i]=:$campos[$i],";
@@ -256,22 +257,19 @@ class Model
                     $sql .= "$campos[$i]=:$campos[$i]";
             }
 
+            //Terminamos poniendo la sentencia WHERE
             $sql .= " WHERE id" . $this->table . " =:id";
 
-            //Utilizamos la conexion activa de nuestro objeto
-            //Para crear la sentencia sql
             $stmt = $this->con->prepare($sql);
 
+            //Sacamos la query que se va a ejecutar para depurar errores
             echo $stmt->queryString;
 
-            //Ejecutamos la sentencia substituyendo las interrogacions por los valores
-            //Que metemos dentro del array que le pasamos a execute
-
+            //Vamos añadiendo los valores uno a uno
             for ($i = 0; $i < count($campos); $i++) {
                 //Dependiendo del tipo de dato le pongo el tipo de parametro pdo asociado
                 //Usando la funcion obtenertipoparametro
                 $tipo = Utils::obtenerTipoParametro($datos[$campos[$i]]);
-                //gettype($datos[$campos[$i]])=="int"?PDO::PARAM_INT:PDO::PARAM_STR;
                 $stmt->bindValue(':'.$campos[$i], $datos[$campos[$i]],$tipo);
             }
             
@@ -280,7 +278,6 @@ class Model
             //Devolvemos el resultado de la ejecucion de la sentencia
             return $resultado;
         } catch (PDOException $e) {
-            //Hubo un problema al eliminar el registro
             echo 'Hubo un problema al modificar el registro: ' . $e->getMessage();
             return false;
         }

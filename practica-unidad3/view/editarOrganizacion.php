@@ -13,7 +13,7 @@
 <div class="container mt-4">
     <h1 class="text-center">Actualizar una Organizacion</h1>
 
-    <form method="POST" action="/organizaciones/modificar" class="mt-4">
+    <form method="POST" action="/organizaciones/modificar" enctype="multipart/form-data" class="mt-4">
     <div class="mb-3">
             <label for="nombre" class="form-label">nombre</label>
             <input type="text" name="nombre" id="nombre" class="form-control" required>
@@ -33,8 +33,9 @@
         </div>
         <div class="mb-3">
             <label for="imagen" class="form-label">imagen</label>
-            <input type="image" name="imagen" id="imagen" class="form-control" required>
+            <input type="file" name="imagen" id="imagen" class="form-control" required>
         </div>
+        <input type="hidden" name="imagen" id="imagen" value=" ">
         <input type="hidden" name="id" value="<?php echo $data['id']; ?>">
         <button type="submit" class="btn btn-success">Guardar</button>
         <a href="/listaOrganizaciones/1" class="btn btn-secondary">Cancelar</a>
