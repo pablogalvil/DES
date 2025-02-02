@@ -61,18 +61,8 @@ class MiembroController
      */
     public function cargarRegistro()
     {
-        //Nos conectamos a la bd
-        $con = Utils::getConnection();
-
-        //Creamos el modelo y llamamos a la funcion para cargar los ids de las unidades
-        $unidadM = new Unidad($con);
-        $unidades = $unidadM->cargarIds("organizacion");
-
-        //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("unidades");
-
         //Cargamos la vista con los datos
-        Utils::render('registro', $datos);
+        Utils::render('registro');
     }
 
     /**
