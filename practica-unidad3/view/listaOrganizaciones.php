@@ -74,13 +74,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/unidades">Unidades</a>
+                        <a class="nav-link" href="/listaUnidades/1">Unidades</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/locales">Locales</a>
+                        <a class="nav-link" href="/listaLocales/1">Locales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/rivalidades">Rivalidades</a>
+                        <a class="nav-link" href="/listaRivalidades/1">Rivalidades</a>
                     </li>
                 </ul>
             </div>

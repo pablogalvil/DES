@@ -15,11 +15,19 @@
 <body>
 <div class="card align-self-center text-center border border-black" style="width: 30rem; margin: auto; margin-top: 5%;">
     <h1 class="card-title">Registrarse</h1>
-
+    <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
     <form method="POST" action="/registro" class="mt-4 card-body">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre (apodo)</label>
             <input type="text" name="nombre" id="nombre" class="form-control border border-black" required>
+        </div>
+        <div class="mb-3">
+            <label for="correo" class="form-label">Email</label>
+            <input type="email" name="correo" id="correo" class="form-control border border-black" required>
+        </div>
+        <div class="mb-3">
+            <label for="contrasenia" class="form-label">Contraseña</label>
+            <input type="password" name="contrasenia" id="contrasenia" class="form-control border border-black" required>
         </div>
         <div class="mb-3">
             <label for="importancia" class="form-label">Importancia</label>
@@ -34,20 +42,6 @@
         <div class="mb-3">
             <label for="nacionalidad" class="form-label">Nacionalidad</label>
             <input type="text" name="nacionalidad" id="nacionalidad" class="form-control border border-black" required>
-        </div>
-        <div>
-            <label for="idunidad" class="form-label">ID de la Unidad</label>
-            <select name="idunidad" id="idunidad" class="form-select border border-black">
-                <?php 
-                foreach ($unidades as $unidad) {
-                    echo "<option value='".$unidad['idunidad']."'>".$unidad['idunidad']."</option>";
-                }
-                ?>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="contrasenia" class="form-label">Contraseña</label>
-            <input type="password" name="contrasenia" id="contrasenia" class="form-control border border-black" required>
         </div>
         <button type="submit" class="btn btn-success">Registrarse</button>
         <a href="/" class="btn btn-link">¿Ya tienes cuenta?</a>

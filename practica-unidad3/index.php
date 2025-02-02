@@ -50,7 +50,6 @@ switch ($routeInfo[0]) {
        
         //Llamamos a la funcion encargada de despachar la ruta
         $controller->$method($vars);
-        //call_user_func([$controller, $method], $vars);
         break;
 }
 ?>

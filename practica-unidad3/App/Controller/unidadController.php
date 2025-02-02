@@ -7,16 +7,21 @@ use App\Model\Unidad;
 class UnidadController
 {
 
-    public function mostrarUnidades()
+    public function mostrarUnidades($datos)
     {
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
         $unidadM = new Unidad($con);
         //Cargamos los entrenadores
-        $unidades = $unidadM->cargarTodoPaginado(1,200);
+        $unidades = $unidadM->cargarTodoPaginado($datos['pagina'],10);
+
+        $contarUnidades = $unidadM->contarTotalRegistros();
+        $pagina = $datos['pagina'];
+
+        $totalPaginas = ceil($contarUnidades / 10);
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("unidades");
+        $datos = compact("unidades", "pagina", "totalPaginas");
 
         
         //Cargamos la vista
@@ -55,7 +60,7 @@ class UnidadController
         //Cargamos los entrenadores
         $unidad = $unidadM->insertar($unidad);
          //Cargamos la vista
-        Utils::redirect('/unidades');
+        Utils::redirect('/listaUnidades/1');
 
     }
 
@@ -76,7 +81,7 @@ class UnidadController
         //Cargamos los entrenadores
         $unidad = $unidadM->modificar($unidad);
          //Cargamos la vista
-        Utils::redirect('/unidades');
+        Utils::redirect('/listaUnidades/1');
 
     }
 
@@ -90,7 +95,7 @@ class UnidadController
        //borramos el entrenador
        $unidadM->borrar($datos['id']);
        //Cargamos la vista
-       Utils::redirect('/unidades');
+       Utils::redirect('/listaUnidades/1');
     }
 
 }

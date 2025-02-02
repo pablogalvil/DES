@@ -32,7 +32,7 @@
         </tr>
     </table>
 
-    <a href="/rivalidades" class="btn btn-secondary">Volver al listado</a>
+    <a href="/listaRivalidades/1" class="btn btn-secondary">Volver al listado</a>
 </div>
 </body>
 </html>

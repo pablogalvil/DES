@@ -40,7 +40,7 @@
         </tr>
     </table>
 
-    <a href="/locales" class="btn btn-secondary">Volver al listado</a>
+    <a href="/listaLocales/1" class="btn btn-secondary">Volver al listado</a>
 </div>
 </body>
 </html>

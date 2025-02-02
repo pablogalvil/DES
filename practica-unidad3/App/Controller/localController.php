@@ -7,16 +7,21 @@ use App\Model\Local;
 class LocalController
 {
 
-    public function mostrarLocales()
+    public function mostrarLocales($datos)
     {
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
         $localM = new Local($con);
         //Cargamos los entrenadores
-        $locales = $localM->cargarTodoPaginado(1,200);
+        $locales = $localM->cargarTodoPaginado($datos['pagina'],200);
+
+        $contarLocales = $localM->contarTotalRegistros();
+        $pagina = $datos['pagina'];
+
+        $totalPaginas = ceil($contarLocales / 10);
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("locales");
+        $datos = compact("locales", "pagina", "totalPaginas");
 
         
         //Cargamos la vista
@@ -55,7 +60,7 @@ class LocalController
         //Cargamos los entrenadores
         $local = $localM->insertar($local);
          //Cargamos la vista
-        Utils::redirect('/locales');
+        Utils::redirect('/listaLocales/1');
 
     }
 
@@ -76,7 +81,7 @@ class LocalController
         //Cargamos los entrenadores
         $local = $localM->modificar($local);
          //Cargamos la vista
-        Utils::redirect('/locales');
+        Utils::redirect('/listaLocales/1');
 
     }
 
@@ -90,7 +95,7 @@ class LocalController
        //borramos el entrenador
        $localM->borrar($datos['id']);
        //Cargamos la vista
-       Utils::redirect('/');
+       Utils::redirect('/listaLocales/1');
     }
 
 }

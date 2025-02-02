@@ -11,6 +11,8 @@ return(function (RouteCollector $r) {
     $r->addRoute('GET', '/logout', ['App\Controller\MiembroController', 'logout']);
     $r->addRoute('GET', '/registro', ['App\Controller\MiembroController', 'cargarRegistro']);
     $r->addRoute('POST', '/registro', ['App\Controller\MiembroController', 'registro']);
+    $r->addRoute('GET', '/validar', ['App\Controller\MiembroController', 'validar']);
+    $r->addRoute('GET', '/validate', ['App\Controller\MiembroController', 'validate']);
 
     //Listado de organizacion
     $r->addRoute('GET', '/listaOrganizaciones/{pagina:\d+}', ['App\Controller\OrganizacionController', 'mostrarOrganizaciones']);
@@ -25,9 +27,7 @@ return(function (RouteCollector $r) {
 
 
     //Listado de unidades
-    $r->addRoute('GET', '/unidades', ['App\Controller\UnidadController', 'mostrarUnidades']);
     $r->addRoute('GET', '/listaUnidades/{pagina:\d+}', ['App\Controller\UnidadController', 'mostrarUnidades']);
-    $r->addRoute('POST', '/unidades', ['App\Controller\UnidadController', 'mostrarUnidadesFiltrado']);
     $r->addRoute('GET', '/unidades/{id:\d+}', ['App\Controller\UnidadController', 'mostrarUnidad']);
     
     //Cambiar datos en una unidad
@@ -39,9 +39,7 @@ return(function (RouteCollector $r) {
 
 
     //Listado de locales
-    $r->addRoute('GET', '/locales', ['App\Controller\LocalController', 'mostrarLocales']);
     $r->addRoute('GET', '/listaLocales/{pagina:\d+}', ['App\Controller\LocalController', 'mostrarLocales']);
-    $r->addRoute('POST', '/locales', ['App\Controller\LocalController', 'mostrarLocalesFiltrado']);
     $r->addRoute('GET', '/locales/{id:\d+}', ['App\Controller\LocalController', 'mostrarLocal']);
     
     //Cambiar datos en un local
@@ -52,9 +50,7 @@ return(function (RouteCollector $r) {
     $r->addRoute('GET','/locales/{id:\d+}/eliminar',['App\Controller\LocalController', 'eliminarLocal']);
 
     //Listado de rivalidades
-    $r->addRoute('GET', '/rivalidades', ['App\Controller\RivalidadController', 'mostrarRivalidades']);
     $r->addRoute('GET', '/listaRivalidades/{pagina:\d+}', ['App\Controller\RivalidadController', 'mostrarRivalidades']);
-    $r->addRoute('POST', '/rivalidades', ['App\Controller\RivalidadController', 'mostrarRivalidadesFiltrado']);
     $r->addRoute('GET', '/rivalidades/{id:\d+}', ['App\Controller\RivalidadController', 'mostrarRivalidad']);
     
     //Cambiar datos en un rivalidad

@@ -7,16 +7,21 @@ use App\Model\Rivalidad;
 class RivalidadController
 {
 
-    public function mostrarRivalidades()
+    public function mostrarRivalidades($datos)
     {
         //Nos conectamos a la bd
         $con = Utils::getConnection();
         //Creamos el modelo
         $rivalidadM = new Rivalidad($con);
         //Cargamos los entrenadores
-        $rivalidades = $rivalidadM->cargarTodoPaginado(1,20);
+        $rivalidades = $rivalidadM->cargarTodoPaginado($datos['pagina'],10);
+
+        $contarRivalidades = $rivalidadM->contarTotalRegistros();
+        $pagina = $datos['pagina'];
+
+        $totalPaginas = ceil($contarRivalidades / 10);
         //Compactamos los datos que necesita la vista para luego pasarselos
-        $datos = compact("rivalidades");
+        $datos = compact("rivalidades", "pagina", "totalPaginas");
 
         
         //Cargamos la vista
@@ -55,7 +60,7 @@ class RivalidadController
         //Cargamos los entrenadores
         $rivalidad = $rivalidadM->insertar($rivalidad);
          //Cargamos la vista
-        Utils::redirect('/rivalidades');
+        Utils::redirect('/listaRivalidades/1');
 
     }
 
@@ -76,7 +81,7 @@ class RivalidadController
         //Cargamos los entrenadores
         $rivalidad = $rivalidadM->modificar($rivalidad);
          //Cargamos la vista
-        Utils::redirect('/rivalidades');
+        Utils::redirect('/listaRivalidades/1');
 
     }
 
@@ -91,7 +96,7 @@ class RivalidadController
        $rivalidadM->borrar($datos['id']);
 
        //Cargamos la vista
-       Utils::redirect('/rivalidades');
+       Utils::redirect('/listaRivalidades/1');
     }
 
 }

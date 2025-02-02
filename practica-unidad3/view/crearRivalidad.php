@@ -28,7 +28,7 @@
             <input type="text" name="zonaconflicto" id="zonaconflicto" maxlength="50" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
-        <a href="/rivalidades" class="btn btn-secondary">Cancelar</a>
+        <a href="/listaRivalidades/1" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 </body>

@@ -36,7 +36,7 @@
         </tr>
     </table>
 
-    <a href="/unidades" class="btn btn-secondary">Volver al listado</a>
+    <a href="/listaUnidades/1" class="btn btn-secondary">Volver al listado</a>
 </div>
 </body>
 </html>

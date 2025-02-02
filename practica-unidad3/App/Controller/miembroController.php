@@ -27,24 +27,30 @@ class MiembroController
         $con = Utils::getConnection();
 
         //Guardamos los datos del formulario de login
-        $nombre = $_POST['nombre'];
+        $correo = $_POST['correo'];
         $contrasenia = $_POST['contrasenia'];
 
         //Creamos el modelo y llamamos a la funcion para cargar el id y la contraseña del miembro
         $miembroM = new Miembro($con);
-        $miembro = $miembroM->cargarMiembro($con, $nombre);
+        $miembro = $miembroM->cargarMiembro($con, $correo);
 
-        //Comprobamos si el miembro existe y si la contraseña es correcta
-        if ($miembro && password_verify($contrasenia, $miembro['contrasenia'])) {
-            //Guardamos el id del miembro en la sesion
-            $_SESSION['user_id'] = $miembro['idmiembro'];
-            //Redirigimos a la pagina de organizaciones
-            Utils::redirect('/listaOrganizaciones/1');
-            exit;
-        } else {
-            //Si no existe o la contraseña es incorrecta mostramos un error y recargamos la vista
-            $error = "Credenciales incorrectas";
+        if ($miembro['validado'] == 0) { 
+            $error = "Debes validar tu cuenta. Revisa tu correo.";
             Utils::render('login', compact('error'));
+            return;
+        }else{
+            //Comprobamos si el miembro existe y si la contraseña es correcta
+            if ($miembro && password_verify($contrasenia, $miembro['contrasenia'])) {
+                //Guardamos el id del miembro en la sesion
+                $_SESSION['user_id'] = $miembro['idmiembro'];
+                //Redirigimos a la pagina de organizaciones
+                Utils::redirect('/listaOrganizaciones/1');
+                exit;
+            } else {
+                //Si no existe o la contraseña es incorrecta mostramos un error y recargamos la vista
+                $error = "Credenciales incorrectas";
+                Utils::render('login', compact('error'));
+            }
         }
         
     }
@@ -77,22 +83,59 @@ class MiembroController
         //Nos conectamos a la bd
         $con = Utils::getConnection();
 
+        //Creamos el modelo
+        $miembroM = new Miembro($con);
+
         //Guardamos los datos del formulario
         $miembro=$_POST;
+
+        //Miramos si el email es valido
+        if ($miembroM->buscarEmail($con, $miembro["correo"])) {
+            $error = "El correo ya esta registrado";
+            Utils::render('registro', compact('error'));
+            exit;
+        }
+
         //Encriptamos la contraseña
         $miembro["contrasenia"] = password_hash($miembro["contrasenia"], PASSWORD_DEFAULT);
 
-        //Creamos el modelo
-        $unidadM = new Unidad($con);
-        //Cargamos el id
-        $miembro["idorganizacion"] = $unidadM->cargarIdOrganizacion($con, $miembro['idunidad']);
+        // Generamos un código único de validación
+        $miembro["codigovalidacion"] = bin2hex(random_bytes(16));
+        
+        // Inicializamos el usuario como no validado
+        $miembro["validado"] = 0;
 
-        //Creamos el modelo
-        $miembroM = new Miembro($con);
+        // Enviar el correo de validación
+        $miembroM->enviarCorreoValidacion($miembro["correo"], $miembro["codigovalidacion"]);
+
         //Insertamos el miembro
         $miembro = $miembroM->insertar($miembro);
 
-        Utils::redirect('/');
+        //Redirigimos a la pagina de validar
+        Utils::redirect('/validar');
+    }
+
+    function validar() {
+        Utils::render('validar');
+    }
+
+    function validate() {
+        $con = Utils::getConnection();
+
+        $codigo = $_GET["codigo"];
+        
+        $miembrosM = new Miembro($con);
+        $existe = $miembrosM->buscarCodigo($con, $codigo);
+
+        if($existe) {
+            $miembroM = new Miembro($con);
+            $miembroM->validarMiembro($con, $codigo);
+            $exito = "Cuenta validada con exito";
+            Utils::render('login', compact('exito'));
+        } else {
+            $error = "Error al validar";
+            Utils::render('registro', $error);
+        }
     }
 
     /**

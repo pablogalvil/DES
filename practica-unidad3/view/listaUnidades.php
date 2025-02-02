@@ -44,10 +44,10 @@
                         <a class="nav-link" href="/listaOrganizaciones/1">Organizaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/locales">Locales</a>
+                        <a class="nav-link" href="/listaLocales/1">Locales</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/rivalidades">Rivalidades</a>
+                        <a class="nav-link" href="/listaRivalidades/1">Rivalidades</a>
                     </li>
                 </ul>
             </div>
@@ -85,6 +85,24 @@
             <?php endforeach; ?>
             </tbody>
         </table>
+
+        <?php 
+        if($pagina > 1){
+            echo "<a href='/listaUnidades/".($pagina-1)."' class='btn btn-dark btn-sm'>Anterior</a>";
+        }
+
+        for($i = 1; $i <= $totalPaginas; $i++){
+            if($i == $pagina){
+                echo "<a href='/listaUnidades/$i' class='btn btn-success btn-sm'>$i</a>";
+            } else {
+                echo "<a href='/listaUnidades/$i' class='btn btn-link btn-sm'>$i</a>";
+            }
+        }
+        
+        if($pagina < $totalPaginas){
+            echo "<a href='/listaUnidades/".($pagina+1)."' class='btn btn-dark btn-sm'>Siguiente</a>";
+        }
+        ?>
 
     </div>
 </body>

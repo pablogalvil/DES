@@ -36,7 +36,7 @@
         </div>
         <input type="hidden" name="id" value="<?php echo $data['id']; ?>">
         <button type="submit" class="btn btn-success">Guardar</button>
-        <a href="/locales" class="btn btn-secondary">Cancelar</a>
+        <a href="/listaLocales/1" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 </body>
