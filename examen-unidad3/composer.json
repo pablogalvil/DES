@@ -1,0 +1,12 @@
+{
+    "name": "daw/examen-unidad3",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "nikic/fast-route": "^1.3"
+    }
+}
