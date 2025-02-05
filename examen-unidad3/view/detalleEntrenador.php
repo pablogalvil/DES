@@ -33,6 +33,21 @@
         </tr>
     </table>
 
+    <form action="/entrenadores/<?= $entrenador['idEntrenador'] ?>/cargarJugadores" method="POST">
+        <select name="equipo" id="equipo" class="form-select">
+            <?php 
+            foreach($equipos as $equipo){
+                echo "<option value='".$equipo["idEquipo"]."'>".$equipo["nombre"]."</option>";
+            }
+            ?>
+        </select>
+        <button type="submit" class="btn btn-success">Cargar</button>
+    </form>
+
+    <?php if(isset($jugadores)){
+        include('detalleJugador.php');
+    }?>
+
     <a href="/" class="btn btn-secondary">Volver al listado</a>
 </div>
 </body>

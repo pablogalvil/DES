@@ -1,5 +1,5 @@
 <?php
-namespace App\Controlador;
+namespace App\Controller;
 
 use App\Utils\Utils;
 use App\Model\Entrenador;
@@ -19,9 +19,8 @@ class EntrenadorController
         //Compactamos los datos que necesita la vista para luego pasarselos
         $datos = compact("entrenadores");
 
-        
         //Cargamos la vista
-       Utils::render('listaEntrenadores',$datos);
+        Utils::render('listaEntrenadores',$datos);
         
     }
 
@@ -35,7 +34,7 @@ class EntrenadorController
         $entrenador = $entrenadorM->cargar($datos['id']);
         //Compactamos los datos que necesita la vista para luego pasarselos
         $datos = compact("entrenador");
-         //Cargamos la vista
+        //Cargamos la vista
         Utils::render('ver',$datos);
     }
 
@@ -64,14 +63,15 @@ class EntrenadorController
     public function eliminarEntrenador($datos)
     {
 
-       //Nos conectamos a la bd
-       $con = Utils::getConnection();
-       //Creamos el modelo
-       $entrenadorM = new Entrenador($con);
-       //borramos el entrenador
-       $entrenadorM->borrar($datos['id']);
-       //Cargamos la vista
-       Utils::redirect('/');
+        //Nos conectamos a la bd
+        $con = Utils::getConnection();
+        
+        //Creamos el modelo
+        $entrenadorM = new Entrenador($con);
+        //borramos el entrenador
+        $entrenadorM->borrar($datos['id']);
+        //Cargamos la vista
+        Utils::redirect('/');
     }
 
     public function editarEntrenador($id)
