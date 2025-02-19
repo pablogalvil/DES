@@ -3,12 +3,15 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Cliente;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\cliente>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cliente>
  */
-class clienteFactory extends Factory
+class ClienteFactory extends Factory
 {
+
+    protected $model = Cliente::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,10 @@ class clienteFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nombre' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'telefono' => fake()->phoneNumber(),
+            'direccion' => fake()->address()
         ];
     }
 }

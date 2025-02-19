@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Mascota extends Model
 {
     use HasFactory;
+    protected $table = 'mascotas';
 
     protected $fillable = [
         'nombre',
@@ -18,6 +19,6 @@ class Mascota extends Model
     ];
 
     public function cliente(){
-        return $this->hasOne(Cliente::class);
+        return $this->belongsTo(Cliente::class);
     }
 }
