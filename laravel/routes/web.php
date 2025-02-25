@@ -20,7 +20,7 @@ Route::put('/clientes/{id}', [ClienteController::class, 'update'])->name('client
 //Ruta para cargar la vista de inserción
 Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
 //Ruta para insertar el cliente
-Route::post('/clientes/create', [ClienteController::class, 'store'])->name('clientes.store');
+Route::post('/clientes/store', [ClienteController::class, 'store'])->name('clientes.store');
 
 
 Route::get('/prueba-factorias', function(){

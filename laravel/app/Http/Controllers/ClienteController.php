@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\Storage;
 
 class ClienteController extends Controller
 {
@@ -38,6 +39,23 @@ class ClienteController extends Controller
             'direccion' => 'required|string|max:255|min:8'
         ]);
 
+        //Creamos al cliente con la request todos los datos menos la imagen
+        $data = $request->except('imagen');
+
+        //Si la request tiene un archivo llamado imagen
+        if($request->hasFile('imagen')) {
+            if ($cliente->imagen) {
+                Storage::disk('public')->delete($cliente->imagen);
+            }
+            //La ruta de la carpeta, única para cada cliente
+            $carpetaCliente = 'imagenes/clientes' . $cliente->id;
+
+            //Guardamos el archivo en el disco duro y obtenemos la ruta completa
+            $imagePath = $request->file('imagen')->store($carpetaCliente, 'public');
+
+            $data['imagen'] = $imagePath;
+        }
+
         $cliente->update($request->all());
         return redirect()->route('clientes.index')->with('success', 'El cliente se ha actualizado correctamente');
     }
@@ -53,7 +71,22 @@ class ClienteController extends Controller
             'telefono' => 'nullable|string|max:255',
             'direccion' => 'required|string|max:255|min:8'
         ]);
-        $cliente = Cliente::create($request->all());
+
+        //Creamos al cliente con la request todos los datos menos la imagen
+        $cliente = Cliente::create($request->except('imagen'));
+
+        //Si la request tiene un archivo llamado imagen
+        if($request->hasFile('imagen')) {
+            //La ruta de la carpeta, única para cada cliente
+            $carpetaCliente = 'imagenes/clientes' . $cliente->id;
+
+            //Guardamos el archivo en el disco duro y obtenemos la ruta completa
+            $imagePath = $request->file('imagen')->store($carpetaCliente, 'public');
+
+            //Guardamos la ruta en la BD
+            $cliente->update(['imagen' => $imagePath]);
+        }
+
         return redirect()->route('clientes.index')->with('success', 'El cliente se ha creado correctamente');
     }
 }
